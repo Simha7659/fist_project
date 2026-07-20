@@ -202,7 +202,7 @@ selected_tab = st.radio(
 st.write("---")
 
 # ---------------------------------------------------------
-# STEP 2: MIDDLE HEADLINE WITH UPDATED LOCATION
+# STEP 2: MIDDLE HEADLINE WITH LOCATION
 # ---------------------------------------------------------
 st.markdown(
     "<h1 class='main-title'>🪔 శ్రీ కనకదుర్గమ్మ తల్లి 🪔</h1>",
@@ -222,25 +222,20 @@ st.markdown(
 # ---------------------------------------------------------
 if selected_tab == "📖 Home (హోమ్)":
     col1, col2, col3 = st.columns([1, 2, 1])
-    local_image_path = r"C:\Users\nara simha\Downloads\streamlit\amma.jpg"
+    image_file = "amma.jpg"
 
     with col2:
         st.markdown("<div class='img-box'>", unsafe_allow_html=True)
-        if os.path.exists(local_image_path):
+        if os.path.exists(image_file):
             st.image(
-                local_image_path,
+                image_file,
                 caption="శ్రీ కనకదుర్గమ్మ తల్లి",
                 use_container_width=True,
             )
         else:
-            try:
-                st.image(
-                    "amma.jpg",
-                    caption="శ్రీ కనకదుర్గమ్మ తల్లి",
-                    use_container_width=True,
-                )
-            except:
-                st.error("`amma.jpg` file not found.")
+            st.error(
+                f"⚠️ Image file `{image_file}` not found in the project directory."
+            )
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
