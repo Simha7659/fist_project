@@ -10,9 +10,6 @@ st.set_page_config(
     page_title="Sri Kanakadurgamma Thalli", page_icon="🪔", layout="wide"
 )
 
-# Set your secret admin password here!
-ADMIN_PASSWORD = "durga2026"  # Change this to your preferred password
-
 # ---------------------------------------------------------
 # 2. CSV File Setup
 # ---------------------------------------------------------
@@ -187,18 +184,6 @@ st.markdown(
 )
 
 # ---------------------------------------------------------
-# Admin Login in Sidebar (Only for You)
-# ---------------------------------------------------------
-with st.sidebar:
-    st.header("🔑 Admin Access")
-    pwd_input = st.text_input("Enter Admin Password to Edit", type="password")
-    is_admin = pwd_input == ADMIN_PASSWORD
-    if is_admin:
-        st.success("Admin Unlocked! You can add/edit data.")
-    elif pwd_input != "":
-        st.error("Incorrect Password")
-
-# ---------------------------------------------------------
 # STEP 1: OPTIONS FIRST (Top Navigation Menu)
 # ---------------------------------------------------------
 selected_tab = st.radio(
@@ -217,7 +202,7 @@ selected_tab = st.radio(
 st.write("---")
 
 # ---------------------------------------------------------
-# STEP 2: MIDDLE HEADLINE WITH LOCATION
+# STEP 2: MIDDLE HEADLINE WITH UPDATED LOCATION
 # ---------------------------------------------------------
 st.markdown(
     "<h1 class='main-title'>🪔 శ్రీ కనకదుర్గమ్మ తల్లి 🪔</h1>",
@@ -228,12 +213,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    "<p class='location-title'>📍 లకు దిగువ, గుడ్లవల్లేరు</p>",
+    "<p class='location-title'>📍 కూరడ దిగువ, గుడ్లవల్లేరు (Kurada Dhiguva, Gudlavalleru)</p>",
     unsafe_allow_html=True,
 )
 
 # ---------------------------------------------------------
-# STEP 3 & 4: HOME TAB
+# STEP 3 & 4: HOME TAB (Image & Wikipedia Below Headline)
 # ---------------------------------------------------------
 if selected_tab == "📖 Home (హోమ్)":
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -255,7 +240,7 @@ if selected_tab == "📖 Home (హోమ్)":
                     use_container_width=True,
                 )
             except:
-                st.error("`amma.jpg` file not found at local path.")
+                st.error("`amma.jpg` file not found.")
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -273,9 +258,9 @@ if selected_tab == "📖 Home (హోమ్)":
         <div class='wiki-box'>
             <h3 style='color: #FFD700; margin-top:0;'>📚 శ్రీ కనకదుర్గ అమ్మవారి చరిత్ర (Wikipedia Overview)</h3>
             <p style='line-height: 1.6; font-size: 1.05rem;'>
-                <b>శ్రీ కనక దుర్గ గుడి</b> భారతదేశంలోని ఆంధ్ర ప్రదేశ రాష్ట్రంలోని విజయవాడ నగరంలో కృష్ణా నది ఒడ్డున ఉన్న ఇంద్రకీలాద్రి పర్వతంపై వెలసిన ప్రసిద్ధ పుణ్యక్షేత్రం. 
+                <b>శ్రీ కనక దుర్గ గుడి</b> భారతదేశంలోని ఆంధ్ర ప్రదేశ్ రాష్ట్రంలోని విజయవాడ నగరంలో కృష్ణా నది ఒడ్డున ఉన్న ఇంద్రకీలాద్రి పర్వతంపై వెలసిన ప్రసిద్ధ పుణ్యక్షేత్రం. 
                 శ్రీ కనకదుర్గమ్మ వారు స్వయంభూగా ఇంద్రకీలాద్రిపై అవతరించారని క్షేత్ర పురాణం చెబుతోంది. 
-                రక్షస సంహారం చేసి భక్తులను కాపాడిన దుర్గమ్మ తల్లిని దర్శించుకోవడానికి ప్రతీ ఏటా లక్షలాది మంది భక్తులు విచ్చేస్తారు. 
+                రాక్షస సంహారం చేసి భక్తులను కాపాడిన దుర్గమ్మ తల్లిని దర్శించుకోవడానికి ప్రతీ ఏటా లక్షలాది మంది భక్తులు విచ్చేస్తారు. 
                 నవరాత్రి ఉత్సవాలు మరియు గ్రామోత్సవాలు ఇక్కడ అత్యంత వైభవంగా జరుగుతాయి.
             </p>
         </div>
@@ -290,37 +275,32 @@ elif selected_tab == "💰 Day-wise Chanda (చందా)":
     st.subheader("💰 చందాల వివరాలు (Day-wise Chanda)")
     chanda_df = load_chanda()
 
-    if is_admin:
-        with st.expander("➕ కొత్త చందా నమోదు చేయండి (Admin Only)"):
-            with st.form("add_chanda_form", clear_on_submit=True):
-                col_s, col_n, col_a, col_d = st.columns(4)
-                new_surname = col_s.text_input("ఇంటి పేరు (Surname)")
-                new_name = col_n.text_input("పేరు (Name)")
-                new_amount = col_a.number_input(
-                    "చందా మొత్తం ₹ (Amount)", min_value=1, step=50
-                )
-                new_date = col_d.date_input("తేదీ (Date)", value=date.today())
+    with st.expander("➕ కొత్త చందా నమోదు చేయండి"):
+        with st.form("add_chanda_form", clear_on_submit=True):
+            col_s, col_n, col_a, col_d = st.columns(4)
+            new_surname = col_s.text_input("ఇంటి పేరు (Surname)")
+            new_name = col_n.text_input("పేరు (Name)")
+            new_amount = col_a.number_input(
+                "చందా మొత్తం ₹ (Amount)", min_value=1, step=50
+            )
+            new_date = col_d.date_input("తేదీ (Date)", value=date.today())
 
-                submit_chanda = st.form_submit_button(
-                    "నమోదు చేయి (Save Entry)"
-                )
-                if submit_chanda:
-                    if new_surname and new_name:
-                        new_row = pd.DataFrame([{
-                            "Surname": new_surname,
-                            "Name": new_name,
-                            "Amount": new_amount,
-                            "Date": str(new_date),
-                        }])
-                        new_row.to_csv(
-                            CHANDA_FILE, mode="a", header=False, index=False
-                        )
-                        st.success("చందా విజయవంతంగా నమోదు చేయబడింది!")
-                        st.rerun()
-                    else:
-                        st.warning(
-                            "దయచేసి ఇంటి పేరు మరియు పేరు నమోదు చేయండి."
-                        )
+            submit_chanda = st.form_submit_button("నమోదు చేయి (Save Entry)")
+            if submit_chanda:
+                if new_surname and new_name:
+                    new_row = pd.DataFrame([{
+                        "Surname": new_surname,
+                        "Name": new_name,
+                        "Amount": new_amount,
+                        "Date": str(new_date),
+                    }])
+                    new_row.to_csv(
+                        CHANDA_FILE, mode="a", header=False, index=False
+                    )
+                    st.success("చందా విజయవంతంగా నమోదు చేయబడింది!")
+                    st.rerun()
+                else:
+                    st.warning("దయచేసి ఇంటి పేరు మరియు పేరు నమోదు చేయండి.")
 
     selected_date = st.date_input(
         "తేదీని ఎంచుకోండి (Select Date)", value=date.today(), key="chanda_date"
@@ -368,37 +348,34 @@ elif selected_tab == "📊 Day-wise Expenses (ఖర్చులు)":
     st.subheader("📊 ఉత్సవ ఖర్చుల వివరాలు (Expenses)")
     exp_df = load_expenses()
 
-    if is_admin:
-        with st.expander("➕ కొత్త ఖర్చు నమోదు చేయండి (Admin Only)"):
-            with st.form("add_expense_form", clear_on_submit=True):
-                ec1, ec2, ec3, ec4 = st.columns(4)
-                e_year = ec1.selectbox("సంవత్సరం (Year)", ["2026", "2025"])
-                e_item = ec2.text_input("ఖర్చు వివరాలు (Expense Item)")
-                e_cost = ec3.number_input(
-                    "ఖర్చు మొత్తం ₹ (Cost)", min_value=1, step=100
-                )
-                e_date = ec4.date_input(
-                    "తేదీ (Date)", value=date.today(), key="exp_form_date"
-                )
+    with st.expander("➕ కొత్త ఖర్చు నమోదు చేయండి"):
+        with st.form("add_expense_form", clear_on_submit=True):
+            ec1, ec2, ec3, ec4 = st.columns(4)
+            e_year = ec1.selectbox("సంవత్సరం (Year)", ["2026", "2025"])
+            e_item = ec2.text_input("ఖర్చు వివరాలు (Expense Item)")
+            e_cost = ec3.number_input(
+                "ఖర్చు మొత్తం ₹ (Cost)", min_value=1, step=100
+            )
+            e_date = ec4.date_input(
+                "తేదీ (Date)", value=date.today(), key="exp_form_date"
+            )
 
-                submit_exp = st.form_submit_button(
-                    "ఖర్చు నమోదు చేయి (Save Expense)"
-                )
-                if submit_exp:
-                    if e_item:
-                        new_exp_row = pd.DataFrame([{
-                            "Year": str(e_year),
-                            "Date": str(e_date),
-                            "Expense Item": e_item,
-                            "Cost": e_cost,
-                        }])
-                        new_exp_row.to_csv(
-                            EXPENSES_FILE, mode="a", header=False, index=False
-                        )
-                        st.success("ఖర్చు వివరాలు నమోదు చేయబడ్డాయి!")
-                        st.rerun()
-                    else:
-                        st.warning("దయచేసి ఖర్చు వివరాలు టైప్ చేయండి.")
+            submit_exp = st.form_submit_button("ఖర్చు నమోదు చేయి (Save Expense)")
+            if submit_exp:
+                if e_item:
+                    new_exp_row = pd.DataFrame([{
+                        "Year": str(e_year),
+                        "Date": str(e_date),
+                        "Expense Item": e_item,
+                        "Cost": e_cost,
+                    }])
+                    new_exp_row.to_csv(
+                        EXPENSES_FILE, mode="a", header=False, index=False
+                    )
+                    st.success("ఖర్చు వివరాలు నమోదు చేయబడ్డాయి!")
+                    st.rerun()
+                else:
+                    st.warning("దయచేసి ఖర్చు వివరాలు టైప్ చేయండి.")
 
     col_yr, col_dt = st.columns(2)
     with col_yr:
@@ -425,7 +402,7 @@ elif selected_tab == "📊 Day-wise Expenses (ఖర్చులు)":
         st.info("ఈ తేదీన ఖర్చులు ఏవీ నమోదు కాలేదు.")
 
 # ---------------------------------------------------------
-# COMMITTEE PAGE
+# COMMITTEE PAGE (NO ROLE COLUMN)
 # ---------------------------------------------------------
 elif selected_tab == "🤝 Committee (కమిటీ)":
     st.subheader("🤝 ఉత్సవ కమిటీ సభ్యులు (Committee Members)")
