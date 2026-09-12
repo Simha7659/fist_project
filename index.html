@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕉️ చంద్రన్న కాలనీ వినాయక చవితి 🕉️</title>
+    <!-- Noto Sans Telugu Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           CONFIG & RESET / గ్లోబల్ స్టైల్స్
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Telugu', sans-serif;
+        }
+
+        :root {
+            --primary-orange: #FF5722;
+            --primary-yellow: #FFC107;
+            --bg-color: #F8F9FA;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-dark: #212529;
+            --text-muted: #6C757D;
+            --danger-red: #DC3545;
+            --success-green: #198754;
+            --border-radius: 16px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: #333333; /* Dark background to frame mobile view on desktop */
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container (Max 600px width) */
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--bg-color);
+            position: relative;
+            padding-bottom: 80px;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           CENTERED VINAYAKA BACKGROUND WATERMARK
+           ========================================================================== */
+        .app-container::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
+            background-image: url('https://timesofindia.indiatimes.com/photo/93882099.cms');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        header, .content, .bottom-nav, .modal-overlay {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==========================================================================
+           HEADER STYLES
+           ========================================================================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-header {
+            background: white;
+            color: var(--primary-orange);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           TAB NAVIGATION
+           ========================================================================== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #E0E0E0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-orange);
+            border-top: 3px solid var(--primary-orange);
+        }
+
+        .nav-item span {
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           CARDS & FORMS
+           ========================================================================== */
+        .content {
+            padding: 16px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border-radius: var(--border-radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .stat-card.green { border-left-color: var(--success-green); }
+        .stat-card.red { border-left-color: var(--danger-red); }
+
+        .stat-card h3 {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-card p {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #DDD;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-orange);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* ==========================================================================
+           TABLES & LISTS
+           ========================================================================== */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #EEE;
+        }
+
+        th {
+            background-color: rgba(241, 243, 245, 0.8);
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .btn-delete {
+            background: #FFEEEF;
+            color: var(--danger-red);
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .member-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #EEE;
+        }
+
+        .member-card:last-child {
+            border-bottom: none;
+        }
+
+        .member-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .member-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           GALLERY
+           ========================================================================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-desc {
+            padding: 8px;
+            font-size: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .gallery-day-tag {
+            font-size: 0.65rem;
+            color: var(--primary-orange);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .gallery-item .btn-delete {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* ==========================================================================
+           MODAL
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal {
+            background: white;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary-orange);
+        }
+
+        .modal p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn-secondary {
+            background: #6C757D;
+        }
+
+        .admin-only {
+            display: none;
+        }
+
+        body.is-admin .admin-only {
+            display: block;
+        }
+
+        body.is-admin tr .admin-only,
+        body.is-admin div .admin-only {
+            display: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header>
+            <h1 id="app-title">🕉️ చంద్రన్న కాలనీ వినాయక చవితి 🕉️</h1>
+            <p>ॐ లంభోదర కమిటీ మేనేజ్‌మెంట్ ॐ</p>
+            <div class="header-actions">
+                <span class="badge" id="role-badge">View Only</span>
+                <button class="btn-header" id="auth-btn" onclick="handleAuthClick()">అడ్మిన్ లాగిన్</button>
+            </div>
+        </header>
+
+        <!-- CONTENT AREA -->
+        <div class="content">
+
+            <!-- TAB 1: చందా (CHANDA) -->
+            <div id="tab-chanda" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>మొత్తం చందా</h3>
+                        <p id="total-chanda">₹0</p>
+                    </div>
+                    <div class="stat-card green">
+                        <h3>చందాదారులు</h3>
+                        <p id="total-chanda-count">0</p>
+                    </div>
+                </div>
+
+                <!-- Admin Add Form -->
+                <div class="card admin-only">
+                    <h3>కొత్త చందా నమోదు</h3>
+                    <form id="form-chanda" onsubmit="addChanda(event)" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label>పేరు</label>
+                            <input type="text" id="chanda-name" class="form-control" required placeholder="పేరు నమోదు చేయండి">
+                        </div>
+                        <div class="form-group">
+                            <label>చందా మొత్తం (₹)</label>
+                            <input type="number" id="chanda-amount" class="form-control" required placeholder="ఉదా: 501">
+                        </div>
+                        <div class="form-group">
+                            <label>తేదీ</label>
+                            <input type="date" id="chanda-date" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn">సేవ్ చేయండి</button>
+                    </form>
+                </div>
+
+                <!-- Chanda List -->
+                <div class="card">
+                    <h3>చందాదారుల జాబితా</h3>
+                    <!-- Search Input for Chanda -->
+                    <div class="form-group" style="margin-top: 10px;">
+                        <input type="text" id="search-chanda" class="form-control" placeholder="🔍 పేరుతో వెతకండి (Search by Name)" onkeyup="renderChanda()">
+                    </div>
+                    <div class="table-responsive" style="margin-top: 10px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>క్ర.సం</th>
+                                    <th>పేరు</th>
+                                    <th>మొత్తం</th>
+                                    <th>తేదీ</th>
+                                    <th class="admin-only">చర్య</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-chanda"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: ఖర్చులు (KARCHULU) -->
+            <div id="tab-karchulu" class="tab-content">
+                <div class="stats-grid">
+                    <div class="stat-card red">
+                        <h3>మొత్తం ఖర్చు</h3>
+                        <p id="total-karchu">₹0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>మిగిలిన బ్యాలెన్స్</h3>
+                        <p id="total-balance">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Admin Add Form -->
+                <div class="card admin-only">
+                    <h3>కొత్త ఖర్చు నమోదు</h3>
+                    <form id="form-karchu" onsubmit="addKarchu(event)" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label>ఖర్చు వివరాలు</label>
+                            <input type="text" id="karchu-name" class="form-control" required placeholder="ఉదా: టెంట్ వేదిక ఖర్చులు">
+                        </div>
+                        <div class="form-group">
+                            <label>మొత్తం (₹)</label>
+                            <input type="number" id="karchu-amount" class="form-control" required placeholder="ఉదా: 1000">
+                        </div>
+                        <div class="form-group">
+                            <label>తేదీ</label>
+                            <input type="date" id="karchu-date" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn">సేవ్ చేయండి</button>
+                    </form>
+                </div>
+
+                <!-- Karchulu List -->
+                <div class="card">
+                    <h3>ఖర్చుల వివరాలు</h3>
+                    <!-- Search Input for Karchulu -->
+                    <div class="form-group" style="margin-top: 10px;">
+                        <input type="text" id="search-karchu" class="form-control" placeholder="🔍 వివరాలతో వెతకండి (Search Expenses)" onkeyup="renderKarchulu()">
+                    </div>
+                    <div class="table-responsive" style="margin-top: 10px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>క్ర.సం</th>
+                                    <th>వివరాలు</th>
+                                    <th>తేదీ</th>
+                                    <th>మొత్తం</th>
+                                    <th class="admin-only">చర్య</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-karchulu"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: కమిటీ సభ్యులు (COMMITTEE) -->
+            <div id="tab-members" class="tab-content">
+                <!-- Admin Add Form -->
+                <div class="card admin-only">
+                    <h3>కొత్త సభ్యుని నమోదు</h3>
+                    <form id="form-member" onsubmit="addMember(event)" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label>పేరు</label>
+                            <input type="text" id="member-name" class="form-control" required placeholder="పేరు నమోదు చేయండి">
+                        </div>
+                        <div class="form-group">
+                            <label>బాధ్యత / హోదా</label>
+                            <input type="text" id="member-role" class="form-control" placeholder="ఉదా: అధ్యక్షుడు, కార్యదర్శి">
+                        </div>
+                        <div class="form-group">
+                            <label>ఫోన్ నెంబర్</label>
+                            <input type="tel" id="member-phone" class="form-control" placeholder="9876543210">
+                        </div>
+                        <button type="submit" class="btn">సేవ్ చేయండి</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>కమిటీ సభ్యులు</h3>
+                    <div id="list-members" style="margin-top: 10px;"></div>
+                </div>
+
+                <!-- WhatsApp Share Button -->
+                <button class="btn btn-whatsapp" onclick="shareToWhatsApp()">
+                    📲 వాట్సాప్‌లో వివరాలు షేర్ చేయండి
+                </button>
+            </div>
+
+            <!-- TAB 4: ఫోటోలు (PHOTOS) -->
+            <div id="tab-photos" class="tab-content">
+                <!-- Admin Add Form -->
+                <div class="card admin-only">
+                    <h3>పీటల మీద కూర్చున్న వాళ్ల ఫోటోలు</h3>
+                    <form id="form-photo" onsubmit="addPhoto(event)" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label>రోజు ఎంచుకోండి</label>
+                            <select id="photo-day" class="form-control">
+                                <option value="Day 1 - స్థాపన">Day 1 - స్థాపన</option>
+                                <option value="Day 2 - ఆటలు">Day 2 - ఆటలు</option>
+                                <option value="Day 3 - DJ డ్యాన్స్">Day 3 - DJ డ్యాన్స్</option>
+                                <option value="Day 4 - పూజలు">Day 4 - పూజలు</option>
+                                <option value="Day 5 - నిమజ్జనం">Day 5 - నిమజ్జనం</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>వివరణ</label>
+                            <input type="text" id="photo-desc" class="form-control" value="పీటల మీద కూర్చున్న వాళ్లు">
+                        </div>
+                        <div class="form-group">
+                            <label>ఫోటోలు ఎంచుకోండి (Multiple)</label>
+                            <input type="file" id="photo-files" class="form-control" accept="image/*" multiple required>
+                        </div>
+                        <button type="submit" class="btn">అప్‌లోడ్ చేయండి</button>
+                    </form>
+                </div>
+
+                <!-- Filter -->
+                <div class="card">
+                    <div class="form-group" style="margin: 0;">
+                        <label>రోజుల వారీగా చూడండి:</label>
+                        <select id="filter-day" class="form-control" onchange="renderPhotos()">
+                            <option value="All">అన్ని రోజులు</option>
+                            <option value="Day 1 - స్థాపన">Day 1 - స్థాపన</option>
+                            <option value="Day 2 - ఆటలు">Day 2 - ఆటలు</option>
+                            <option value="Day 3 - DJ డ్యాన్స్">Day 3 - DJ డ్యాన్స్</option>
+                            <option value="Day 4 - పూజలు">Day 4 - పూజలు</option>
+                            <option value="Day 5 - నిమజ్జనం">Day 5 - నిమజ్జనం</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Photos Gallery Display -->
+                <div id="gallery-container"></div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('chanda', this)">
+                <span>🪙</span> చందా
+            </button>
+            <button class="nav-item" onclick="switchTab('karchulu', this)">
+                <span>📋</span> ఖర్చులు
+            </button>
+            <button class="nav-item" onclick="switchTab('members', this)">
+                <span>👥</span> కమిటీ
+            </button>
+            <button class="nav-item" onclick="switchTab('photos', this)">
+                <span>🖼️</span> ఫోటోలు
+            </button>
+        </nav>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <h2>చంద్రన్న కాలనీ వినాయక చవితి</h2>
+            <p>అడ్మిన్ లాగిన్</p>
+            
+            <div class="form-group" style="text-align: left;">
+                <label>అడ్మిన్ పాస్‌వర్డ్:</label>
+                <input type="password" id="admin-pass-input" class="form-control" placeholder="పాస్‌వర్డ్ నమోదు చేయండి">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn" onclick="attemptLogin()">లాగిన్</button>
+                <button class="btn btn-secondary" onclick="closeModal()">రద్దు చేయి</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <!-- JAVASCRIPT LOGIC WITH FIREBASE INTEGRATION -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC56t_44tfphxUm0RPyKg6Kfog9aO8zbdU",
+            authDomain: "vinayaka-7f5a2.firebaseapp.com",
+            databaseURL: "https://vinayaka-7f5a2-default-rtdb.firebaseio.com",
+            projectId: "vinayaka-7f5a2",
+            storageBucket: "vinayaka-7f5a2.firebasestorage.app",
+            messagingSenderId: "668230908589",
+            appId: "1:668230908589:web:273a185fa728d58f512424",
+            measurementId: "G-EQLENFT24F"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const VILLAGE_NAME = "చంద్రన్న కాలనీ";
+        const ADMIN_PASS = "8978@Aaa";
+
+        let state = {
+            chanda: [],
+            karchulu: [],
+            members: [],
+            pics: []
+        };
+
+        let isAdmin = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('app-title').innerText = `${VILLAGE_NAME} వినాయక చవితి`;
+            document.getElementById('chanda-date').valueAsDate = new Date();
+            document.getElementById('karchu-date').valueAsDate = new Date();
+            
+            // Realtime Sync Listeners
+            setupRealtimeListeners();
+            applyAuthVisuals();
+        });
+
+        function setupRealtimeListeners() {
+            // Listen to Chanda Realtime
+            db.ref('chanda').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.chanda = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderChanda();
+            });
+
+            // Listen to Karchulu Realtime
+            db.ref('karchulu').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.karchulu = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderKarchulu();
+            });
+
+            // Listen to Members Realtime
+            db.ref('members').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.members = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderMembers();
+            });
+
+            // Listen to Photos Realtime
+            db.ref('pics').on('value', (snapshot) => {
+                const data = snapshot.val();
+                state.pics = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderPhotos();
+            });
+        }
+
+        function handleAuthClick() {
+            if (isAdmin) {
+                isAdmin = false;
+                applyAuthVisuals();
+            } else {
+                reopenAuthModal();
+            }
+        }
+
+        function attemptLogin() {
+            const inputPass = document.getElementById('admin-pass-input').value;
+            if (inputPass === ADMIN_PASS) {
+                isAdmin = true;
+                applyAuthVisuals();
+                closeModal();
+            } else {
+                alert("తప్పు పాస్‌వర్డ్! మరలా ప్రయత్నించండి.");
+            }
+        }
+
+        function reopenAuthModal() {
+            document.getElementById('admin-pass-input').value = '';
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('auth-modal').style.display = 'none';
+        }
+
+        function applyAuthVisuals() {
+            const badge = document.getElementById('role-badge');
+            const authBtn = document.getElementById('auth-btn');
+
+            if (isAdmin) {
+                document.body.classList.add('is-admin');
+                badge.innerText = "Admin Mode - ఎడిట్ చేయొచ్చు";
+                badge.style.background = "#198754";
+                authBtn.innerText = "లాగ్ అవుట్";
+            } else {
+                document.body.classList.remove('is-admin');
+                badge.innerText = "View Only";
+                badge.style.background = "rgba(255, 255, 255, 0.25)";
+                authBtn.innerText = "అడ్మిన్ లాగిన్";
+            }
+            renderAll();
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function renderAll() {
+            renderChanda();
+            renderKarchulu();
+            renderMembers();
+            renderPhotos();
+        }
+
+        // --- CHANDA FIREBASE ACTIONS ---
+        function addChanda(e) {
+            e.preventDefault();
+            const peru = document.getElementById('chanda-name').value;
+            const amt = parseFloat(document.getElementById('chanda-amount').value) || 0;
+            const date = document.getElementById('chanda-date').value;
+
+            db.ref('chanda').push({ peru, amt, date });
+
+            document.getElementById('form-chanda').reset();
+            document.getElementById('chanda-date').valueAsDate = new Date();
+        }
+
+        function deleteChanda(id) {
+            if (confirm("నిజంగానే ఈ రికార్డును తొలగించాలనుకుంటున్నారా?")) {
+                db.ref(`chanda/${id}`).remove();
+            }
+        }
+
+        function renderChanda() {
+            const tbody = document.getElementById('table-chanda');
+            tbody.innerHTML = '';
+
+            const searchInput = document.getElementById('search-chanda');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            // Filter array based on name matching search query
+            const filteredChanda = state.chanda.filter(item => {
+                return !query || (item.peru && item.peru.toLowerCase().includes(query));
+            });
+
+            filteredChanda.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.peru}</td>
+                        <td>₹${item.amt}</td>
+                        <td>${item.date}</td>
+                        <td class="admin-only">
+                            <button class="btn-delete" onclick="deleteChanda('${item.id}')">డిలీట్</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Totals remain calculated on full state
+            const totalAmt = state.chanda.reduce((sum, item) => sum + Number(item.amt || 0), 0);
+            document.getElementById('total-chanda').innerText = `₹${totalAmt}`;
+            document.getElementById('total-chanda-count').innerText = `${state.chanda.length} మంది`;
+        }
+
+        // --- KARCHULU FIREBASE ACTIONS ---
+        function addKarchu(e) {
+            e.preventDefault();
+            const name = document.getElementById('karchu-name').value;
+            const amt = parseFloat(document.getElementById('karchu-amount').value) || 0;
+            const date = document.getElementById('karchu-date').value;
+
+            db.ref('karchulu').push({ name, amt, date });
+
+            document.getElementById('form-karchu').reset();
+            document.getElementById('karchu-date').valueAsDate = new Date();
+        }
+
+        function deleteKarchu(id) {
+            if (confirm("ఈ ఖర్చు వివరాలను తొలగించాలనుకుంటున్నారా?")) {
+                db.ref(`karchulu/${id}`).remove();
+            }
+        }
+
+        function renderKarchulu() {
+            const tbody = document.getElementById('table-karchulu');
+            tbody.innerHTML = '';
+
+            const searchInput = document.getElementById('search-karchu');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            // Filter array based on item details matching search query
+            const filteredKarchulu = state.karchulu.filter(item => {
+                return !query || (item.name && item.name.toLowerCase().includes(query));
+            });
+
+            filteredKarchulu.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.date}</td>
+                        <td>₹${item.amt}</td>
+                        <td class="admin-only">
+                            <button class="btn-delete" onclick="deleteKarchu('${item.id}')">డిలీట్</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Totals remain calculated on full state
+            const totalKarchu = state.karchulu.reduce((sum, item) => sum + Number(item.amt || 0), 0);
+            const totalChanda = state.chanda.reduce((sum, item) => sum + Number(item.amt || 0), 0);
+            const balance = totalChanda - totalKarchu;
+
+            document.getElementById('total-karchu').innerText = `₹${totalKarchu}`;
+            document.getElementById('total-balance').innerText = `₹${balance}`;
+        }
+
+        // --- MEMBERS FIREBASE ACTIONS ---
+        function addMember(e) {
+            e.preventDefault();
+            const name = document.getElementById('member-name').value;
+            const role = document.getElementById('member-role').value || "సభ్యుడు";
+            const phone = document.getElementById('member-phone').value || "-";
+
+            db.ref('members').push({ name, role, phone });
+
+            document.getElementById('form-member').reset();
+        }
+
+        function deleteMember(id) {
+            if (confirm("ఈ సభ్యుడిని తొలగించాలనుకుంటున్నారా?")) {
+                db.ref(`members/${id}`).remove();
+            }
+        }
+
+        function renderMembers() {
+            const container = document.getElementById('list-members');
+            container.innerHTML = '';
+
+            if (state.members.length === 0) {
+                container.innerHTML = '<p style="font-size: 0.85rem; color: var(--text-muted);">సభ్యులు ఎవరూ లేరు.</p>';
+                return;
+            }
+
+            state.members.forEach(m => {
+                container.innerHTML += `
+                    <div class="member-card">
+                        <div class="member-info">
+                            <h4>${m.name}</h4>
+                            <p>${m.role} • 📞 ${m.phone}</p>
+                        </div>
+                        <button class="btn-delete admin-only" onclick="deleteMember('${m.id}')">డిలీట్</button>
+                    </div>
+                `;
+            });
+        }
+
+        // --- PHOTOS FIREBASE ACTIONS ---
+        function addPhoto(e) {
+            e.preventDefault();
+            const day = document.getElementById('photo-day').value;
+            const desc = document.getElementById('photo-desc').value;
+            const files = document.getElementById('photo-files').files;
+
+            if (files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    db.ref('pics').push({
+                        day: day,
+                        desc: desc,
+                        src: event.target.result
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById('form-photo').reset();
+            document.getElementById('photo-desc').value = "పీటల మీద కూర్చున్న వాళ్లు";
+        }
+
+        function deletePhoto(id) {
+            if (confirm("ఈ ఫోటోను డిలీట్ చేయాలా?")) {
+                db.ref(`pics/${id}`).remove();
+            }
+        }
+
+        function renderPhotos() {
+            const filter = document.getElementById('filter-day').value;
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+
+            const filteredPics = filter === "All" ? state.pics : state.pics.filter(p => p.day === filter);
+
+            if (filteredPics.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">ఫోటోలు లేవు.</p>';
+                return;
+            }
+
+            const groups = {};
+            filteredPics.forEach(pic => {
+                if (!groups[pic.day]) groups[pic.day] = [];
+                groups[pic.day].push(pic);
+            });
+
+            for (const day in groups) {
+                let gridHtml = `<div class="card">
+                    <h3>${day}</h3>
+                    <div class="gallery-grid">`;
+
+                groups[day].forEach(pic => {
+                    gridHtml += `
+                        <div class="gallery-item">
+                            <img src="${pic.src}" alt="Event Photo">
+                            <button class="btn-delete admin-only" onclick="deletePhoto('${pic.id}')">✕</button>
+                            <div class="gallery-desc">
+                                <span class="gallery-day-tag">${pic.day}</span>
+                                ${pic.desc}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                gridHtml += `</div></div>`;
+                container.innerHTML += gridHtml;
+            }
+        }
+
+        function shareToWhatsApp() {
+            const totalChanda = state.chanda.reduce((sum, item) => sum + Number(item.amt || 0), 0);
+            const totalKarchu = state.karchulu.reduce((sum, item) => sum + Number(item.amt || 0), 0);
+            const balance = totalChanda - totalKarchu;
+
+            let memberListStr = state.members.map(m => `• ${m.name} (${m.role})`).join('\n');
+
+            let message = `🌸 *${VILLAGE_NAME} వినాయక చవితి ఉత్సవాలు* 🌸\n\n`;
+            message += `💰 *మొత్తం చందా:* ₹${totalChanda}\n`;
+            message += `📋 *మొత్తం ఖర్చులు:* ₹${totalKarchu}\n`;
+            message += `💵 *మిగిలిన బ్యాలెన్స్:* ₹${balance}\n\n`;
+            message += `👥 *కమిటీ సభ్యులు:*\n${memberListStr || 'లేరు'}\n\n`;
+            message += `గణపతి బప్పా మోరియా! 🙏`;
+
+            const encodedMsg = encodeURIComponent(message);
+            window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
